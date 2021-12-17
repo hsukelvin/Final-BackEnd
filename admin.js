@@ -37,7 +37,7 @@ function getOrderData(){
 }
 
 function renderOrderList(orderData){
-    console.log('renderOrderList');
+    //console.log('renderOrderList');
     const orderPageTable = document.querySelector('.orderPage-table');
     let str = `<thead>
                 <tr>
@@ -93,7 +93,7 @@ function renderOrderList(orderData){
 }
 
 function renderC3(orderData){
-    console.log('renderC3');
+    //console.log('renderC3');
     //做全品項營收比重，類別含四項，篩選出前三名營收品項，其他 4~8 名都統整為「其它」
     const titleCount = {};
     const categoryCount = {};
@@ -112,9 +112,9 @@ function renderC3(orderData){
             }
         })
     })
-    console.log(categoryCount);
+    //console.log(categoryCount);
     const titleCountArryData = Object.entries(titleCount);
-    console.log(titleCountArryData);
+    //console.log(titleCountArryData);
     const sortData = titleCountArryData.sort(function(a, b) {return a[1] - b[1];});
     const c3_titleCountColumnsData = [];
     let otherCount = 0;
@@ -221,18 +221,18 @@ function addEventHandle(){
         const node = e.target.nodeName;
         if(node !== 'A' && node !== 'INPUT') return;
         if(e.target.className === 'discardAllBtn'){
-            console.log('刪除全部');
+            //console.log('刪除全部');
             deleteOrderAll();
             return;
         }
         if(e.target.className === 'delSingleOrder-Btn'){
-            console.log('刪除單一個');
+            //console.log('刪除單一個');
             const id = e.target.dataset.id;
             deleteOrderSingle(id);
             return;
         }
         if(e.target.className === 'orderStatus'){
-            console.log('更改狀態');
+            //console.log('更改狀態');
             const id = e.target.dataset.id;
             let paid = e.target.dataset.paid;
             if(paid === 'true') {
