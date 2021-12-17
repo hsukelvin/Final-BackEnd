@@ -37,6 +37,7 @@ function getOrderData(){
 }
 
 function renderOrderList(orderData){
+    console.log('renderOrderList');
     const orderPageTable = document.querySelector('.orderPage-table');
     let str = `<thead>
                 <tr>
@@ -92,6 +93,7 @@ function renderOrderList(orderData){
 }
 
 function renderC3(orderData){
+    console.log('renderC3');
     if(orderData.length === 0) return;
     //做全品項營收比重，類別含四項，篩選出前三名營收品項，其他 4~8 名都統整為「其它」
     const titleCount = {};
@@ -146,10 +148,14 @@ function renderC3(orderData){
     const c3_categoryCountColumnsData = Object.entries(categoryCount);
     console.log(c3_categoryCountColumnsData);
 
+    const color = ['#DACBFF','#9D7FEA','#5434A7'];
     const chart2_Colors = {};
-    chart2_Colors[c3_categoryCountColumnsData[0][0]] = '#DACBFF';
-    chart2_Colors[c3_categoryCountColumnsData[1][0]] = '#9D7FEA';
-    chart2_Colors[c3_categoryCountColumnsData[2][0]] = '#5434A7';
+    c3_categoryCountColumnsData.forEach((item,index) => {
+        console.log(item);
+        chart2_Colors[item[0]] = color[index];
+    })
+
+    console.log('chart2_Colors',chart2_Colors);
 
     let chart2 = c3.generate({
         bindto: '#chart2', // HTML 元素綁定
@@ -212,24 +218,26 @@ function deleteOrderAll(){
 }
 
 function addEventHandle(){
+    console.log('addEventHandle');
     const orderPageList = document.querySelector('.orderPage-list');
     orderPageList.addEventListener('click',function(e){
         e.preventDefault();
+        console.log('click');
         const node = e.target.nodeName;
         if(node !== 'A' && node !== 'INPUT') return;
         if(e.target.className === 'discardAllBtn'){
-            //console.log('刪除全部');
+            console.log('刪除全部');
             deleteOrderAll();
             return;
         }
         if(e.target.className === 'delSingleOrder-Btn'){
-            //console.log('刪除單一個');
+            console.log('刪除單一個');
             const id = e.target.dataset.id;
             deleteOrderSingle(id);
             return;
         }
         if(e.target.className === 'orderStatus'){
-            //console.log('更改狀態');
+            console.log('更改狀態');
             const id = e.target.dataset.id;
             let paid = e.target.dataset.paid;
             if(paid === 'true') {
