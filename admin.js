@@ -94,7 +94,6 @@ function renderOrderList(orderData){
 
 function renderC3(orderData){
     console.log('renderC3');
-    if(orderData.length === 0) return;
     //做全品項營收比重，類別含四項，篩選出前三名營收品項，其他 4~8 名都統整為「其它」
     const titleCount = {};
     const categoryCount = {};
@@ -129,40 +128,36 @@ function renderC3(orderData){
     })
     c3_titleCountColumnsData.push(["其他",otherCount]);
 
+    const chart1Color = ['#DACBFF','#9D7FEA','#5434A7','301E5F'];
     const chart1_Colors = {};
-    chart1_Colors[c3_titleCountColumnsData[0][0]] = '#DACBFF';
-    chart1_Colors[c3_titleCountColumnsData[1][0]] = '#9D7FEA';
-    chart1_Colors[c3_titleCountColumnsData[2][0]] = '#5434A7';
-    chart1_Colors[c3_titleCountColumnsData[3][0]] = '#301E5F';
+    c3_titleCountColumnsData.forEach((item,index) => {
+        chart1_Colors[item[0]] = chart1Color[index];
+    })
 
     // C3.js
     let chart1 = c3.generate({
         bindto: '#chart1', // HTML 元素綁定
         data: {
             type: "pie",
-            columns: c3_titleCountColumnsData,
-            colors: chart1_Colors
+            columns: orderData.length !== 0?c3_titleCountColumnsData:[['無資料',1]],
+            colors: orderData.length !== 0?chart1_Colors:{無資料:'#DACBFF'}
         },
     });
 
     const c3_categoryCountColumnsData = Object.entries(categoryCount);
-    console.log(c3_categoryCountColumnsData);
 
-    const color = ['#DACBFF','#9D7FEA','#5434A7'];
+    const chart2Color = ['#DACBFF','#9D7FEA','#5434A7'];
     const chart2_Colors = {};
     c3_categoryCountColumnsData.forEach((item,index) => {
-        console.log(item);
-        chart2_Colors[item[0]] = color[index];
+        chart2_Colors[item[0]] = chart2Color[index];
     })
-
-    console.log('chart2_Colors',chart2_Colors);
 
     let chart2 = c3.generate({
         bindto: '#chart2', // HTML 元素綁定
         data: {
             type: "pie",
-            columns: c3_categoryCountColumnsData,
-            colors: chart2_Colors
+            columns: orderData.length !== 0?c3_categoryCountColumnsData:[['無資料',1]],
+            colors: orderData.length !== 0?chart2_Colors:{無資料:'#DACBFF'}
         },
     });
 }
